@@ -1,0 +1,5 @@
+Rings from outer to inner:
+	1. Karyotypes
+	2. Density of tandem repeats
+	3. Density of Hi-C links
+	4. Density of ChIP reads
