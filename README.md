@@ -27,7 +27,7 @@ Here, we prepare two required data (reference genome and Pacbio or ONT long-read
 
 ### reference genome (FASTA format) 
 ```
-wget -c https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
+download from: https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
 zcat Col-CEN_v1.2.fasta.gz > ref.fa
 ```
 
@@ -111,34 +111,85 @@ Here, we take the output results of the 'Pacbio hifi long reads + HiC data + ChI
 
 ```
 cd $PWD/hifihicchip
-ls -lh *
-# -rw-rw-r-- 1 nieshuai nieshuai  124 Jan 12 16:33 circos_legend.txt
-# -rw-rw-r-- 1 nieshuai nieshuai 339K Jan 12 16:32 hifihicchip.chip.count
-# -rw-rw-r-- 2 nieshuai nieshuai 180K Jan 12 16:33 hifihicchip.circos.pdf
-# -rw-rw-r-- 2 nieshuai nieshuai 867K Jan 12 16:32 hifihicchip.circos.png
-# -rw-rw-r-- 1 nieshuai nieshuai 377K Jan 12 16:31 hifihicchip.hic.count
-# -rw-rw-r-- 1 nieshuai nieshuai  31K Jan 12 16:20 hifihicchip.trf.count
-# -rw-rw-r-- 1 nieshuai nieshuai  236 Jan 12 16:20 hifihicchip.trf.fa
-
-# hifihicchip.circos:
-# total 1.6M
-# -rw-rw-r-- 1 nieshuai nieshuai  352 Apr 20  2022 circos.conf
-# -rw-rw-r-- 2 nieshuai nieshuai 180K Jan 12 16:33 circos.pdf
-# -rw-rw-r-- 2 nieshuai nieshuai 867K Jan 12 16:32 circos.png
-# -rw-rw-r-- 1 nieshuai nieshuai 510K Jan 12 16:32 circos.svg
-# drwxrwxr-x 2 nieshuai nieshuai  148 Jan 12 16:32 data
-# drwxrwxr-x 3 nieshuai nieshuai 4.0K Apr 20  2022 etc
-# -rw-rw-r-- 1 nieshuai nieshuai 1.4K Jan 12 16:32 histogram.conf
-# -rw-rw-r-- 1 nieshuai nieshuai  297 Apr 20  2022 image.generic.conf
+tree 
+.
+├── hifihicchip.candidate_peaks.bed # KEY
+├── hifihicchip.chip.count          # KEY
+├── hifihicchip.circos_legend.pdf
+├── hifihicchip.circos_legend.txt
+├── hifihicchip.circos.pdf          # KEY
+├── hifihicchip.circos.png
+├── hifihicchip.hic.count.100000.inter_chr
+├── hifihicchip.hic.count.100000.intra_chr
+├── hifihicchip.trf.count
+├── hifihicchip.trf.fa #Sequences of Candidate TR Monomer
+├── hifihicchip.circos #Intermediate PATH for Visualization
+│   ├── circos.conf
+│   ├── circos.pdf
+│   ├── circos.png
+│   ├── circos.svg
+│   ├── colors.conf
+│   ├── data
+│   │   ├── chip_density.txt
+│   │   ├── genome_gc.txt
+│   │   ├── genome_karyotype.txt
+│   │   ├── hic_inter.density.txt
+│   │   └── tr_density.txt
+│   ├── etc
+│   │   ├── arial.ttf
+│   │   ├── background.black.conf
+│   │   ├── background.white.conf
+│   │   ├── bands.conf
+│   │   ├── BREWER
+│   │   ├── brewer.all.conf
+│   │   ├── brewer.conf
+│   │   ├── colors.brewer.conf
+│   │   ├── colors.conf
+│   │   ├── colors_fonts_patterns.conf
+│   │   ├── colors.hsv.conf
+│   │   ├── colors.ucsc.conf
+│   │   ├── colors.unix.txt
+│   │   ├── fonts.bk.conf
+│   │   ├── fonts.conf
+│   │   ├── gddiag.conf
+│   │   ├── housekeeping.conf
+│   │   ├── ideogram.conf
+│   │   ├── ideogram.label.conf
+│   │   ├── ideogram.position.conf
+│   │   ├── image.black.conf
+│   │   ├── image.conf
+│   │   ├── makehuesteps
+│   │   ├── patterns.conf
+│   │   ├── patterns.svg.conf
+│   │   ├── README
+│   │   ├── ticks.conf
+│   │   └── tracks
+│   │       ├── axis.conf
+│   │       ├── connector.conf
+│   │       ├── heatmap.conf
+│   │       ├── highlight.bg.conf
+│   │       ├── highlight.conf
+│   │       ├── histogram.conf
+│   │       ├── line.conf
+│   │       ├── link.conf
+│   │       ├── README
+│   │       ├── scatter.conf
+│   │       ├── text.conf
+│   │       └── tile.conf
+│   ├── histogram.conf
+└── └── image.generic.conf
 ```
 
-Firstly, we can preliminarily locate the centromere region by examining the distribution of tandem repeat clusters on the circos plot "hifihicchip.circos.pdf".
 
-Next, we can determine the start and end positions of potential centromere regions based on files that quantitatively describe the density distribution of specific features. These files include hifihicchip.trf.count, which represents the density of tandem repeats from PacBio long reads, hifihicchip.hic.count, which represents the density of Hi-C links, and hifihicchip.chip.count, which represents the density of ChIP reads.
+
+Firstly, we can preliminarily locate the centromere region by examining the distribution of tandem repeat clusters on the circos plot "hifihicchip.circos.pdf". The legends were saved in files "hifihicchip.circos_legend.pdf" and "hifihicchip.circos_legend.txt". The potential peaks were described in "hifihicchip.candidate_peaks.bed", extracted from the Circos plot at different omics levels.
+
+Next, we can determine the start and end positions of potential centromere regions based on files that quantitatively describe the density distribution of specific features. These files include hifihicchip.trf.count, which represents the density of tandem repeats from hifi long reads, hifihicchip.hic.count.100000.inter_chr and hifihicchip.hic.count.100000.intra_chr, which represents the density of Hi-C contact links an interchromosomal and intrachromosomal level, and hifihicchip.chip.count, which represents the density of ChIP reads.
 
 Lastly, taking chromosome 5 (Chr5) as an example:
 The potential centromere region locatable based on PacBio HiFi long reads (hifihicchip.trf.count) is 12,330,000 to 13,690,000 bp.
 The potential centromere region locatable based on ChIP-seq short reads (hifihicchip.chip.count) is 11,790,000 to 14,560,000 bp.
 The potential centromere region locatable based on Hi-C short reads (hifihicchip.hic.count) is 11,830,000 to 14,290,000 bp.
+
 
 
