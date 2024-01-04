@@ -1,9 +1,8 @@
 
 # Introduction
-Centromeres are extremely unique regions of heterochromatin on chromosomes. They typically exhibit close interchromosomal or intrachromosomal interactions in the three-dimensional genome structure, as well as being marked by specific DNA-binding proteins, including the centromere protein H3 variant (CENH3), and are enriched with high-copy tandem repeat sequences. Centromics is a pipeline used to identify centromeres in highly contiguous genome assemblies, such as the T2T genome. It utilizes PacBio/ONT long-read sequencing to identify specific clusters of high-copy tandem repeats, thereby pinpointing potential centromere regions. Centromeres can also be identified based on HI-C sequencing and CENH3 chip-seq.
+Centromics is a computational pipeline for centromeres identification in highly contiguous genome assemblies, such as the T2T genome. It utilizes various evidences as reflected in distribution of tandem repeat, chromatin contact, and CENH3 Chip-Seq, to pinpoint the potential centromere regions. In this pipeline, (1) high-copy tandem repeats are identified and explored from high-quality long reads from PacBio/ONT sequencing; (2) chromatin contacts from Hi-C sequencing and (3) CENH3 chip-seq could also be examined. Centromics is workable solely on a high-quality genome assembly (where centromeres are assembled well).
 
-
-# Install
+# Installation
 ```
 git clone --recurse-submodules https://github.com/zhangrengang/Centromics
 cd Centromics
@@ -22,10 +21,10 @@ mkdir $PWD/example_data
 cd $PWD/example_data
 ```
 
-## 1.Download and process the input data
+## 1. Download and process the input data
 Here, we prepare two required data (reference genome and Pacbio or ONT long-reads) and two optional data (CENH3 ChIP-seq and Hi-C illumina short-resds).
 
-### reference genome (FASTA format) 
+### Reference genome (FASTA format) 
 ```
 download from: https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
 zcat Col-CEN_v1.2.fasta.gz > ref.fa
@@ -79,7 +78,7 @@ wget -c ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR150/009/SRR1504819/SRR1504819_2.fa
 java -jar juicebox_tools.jar pre -n aligned/merged_nodups.txt merged_nodups.hic ref.fa.chrom.sizes
 ```
 
-## 2.Perform Centromics 
+## 2. Perform Centromics computation
 
 Different input data can be combined. Here we list all the possibilities.
 
@@ -182,7 +181,13 @@ tree
 
 
 
-Firstly, we can preliminarily locate the centromere region by examining the distribution of tandem repeat clusters on the circos plot "hifihicchip.circos.pdf". The legends were saved in files "hifihicchip.circos_legend.pdf" and "hifihicchip.circos_legend.txt". The potential peaks were described in "hifihicchip.candidate_peaks.bed", extracted from the Circos plot at different omics levels.
+Firstly, we can preliminarily locate the centromere region by examining the distribution of tandem repeat clusters on the circos plot "hifihicchip.circos.pdf". The legends were saved in files "hifihicchip.circos_legend.pdf" and "hifihicchip.circos_legend.txt". 
+Rings from outer to inner of circos plot:
+        1. Karyotypes
+        2. Density of tandem repeats from PacBio long-reads		
+        3. Density of Hi-C links		
+        4. Density of ChIP reads
+The potential peaks were described in "hifihicchip.candidate_peaks.bed", extracted from the Circos plot at different omics levels.
 
 Next, we can determine the start and end positions of potential centromere regions based on files that quantitatively describe the density distribution of specific features. These files include hifihicchip.trf.count, which represents the density of tandem repeats from hifi long reads, hifihicchip.hic.count.100000.inter_chr and hifihicchip.hic.count.100000.intra_chr, which represents the density of Hi-C contact links an interchromosomal and intrachromosomal level, and hifihicchip.chip.count, which represents the density of ChIP reads.
 
@@ -190,6 +195,4 @@ Lastly, taking chromosome 5 (Chr5) as an example:
 The potential centromere region locatable based on PacBio HiFi long reads (hifihicchip.trf.count) is 12,330,000 to 13,690,000 bp.
 The potential centromere region locatable based on ChIP-seq short reads (hifihicchip.chip.count) is 11,790,000 to 14,560,000 bp.
 The potential centromere region locatable based on Hi-C short reads (hifihicchip.hic.count) is 11,830,000 to 14,290,000 bp.
-
-
 
