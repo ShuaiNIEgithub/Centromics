@@ -113,17 +113,17 @@ Here, we take the output results of the 'Pacbio hifi long reads + HiC data + ChI
 cd $PWD/hifihicchip
 tree 
 .
-├── hifihicchip.candidate_peaks.bed # KEY
-├── hifihicchip.chip.count          # KEY
+├── hifihicchip.candidate_peaks.bed                    # KEY
+├── hifihicchip.chip.count                             # KEY
 ├── hifihicchip.circos_legend.pdf
 ├── hifihicchip.circos_legend.txt
-├── hifihicchip.circos.pdf          # KEY
+├── hifihicchip.circos.pdf                             # KEY
 ├── hifihicchip.circos.png
 ├── hifihicchip.hic.count.100000.inter_chr
 ├── hifihicchip.hic.count.100000.intra_chr
 ├── hifihicchip.trf.count
-├── hifihicchip.trf.fa #Sequences of Candidate TR Monomer
-├── hifihicchip.circos #Intermediate PATH for Visualization
+├── hifihicchip.trf.fa                                 #Sequences of Candidate TR Monomer
+├── hifihicchip.circos                                 #Intermediate PATH for Visualization
 │   ├── circos.conf
 │   ├── circos.pdf
 │   ├── circos.png
