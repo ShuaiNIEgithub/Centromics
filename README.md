@@ -9,7 +9,7 @@ cd Centromics
 conda env create -f Centromics.yaml
 conda activate RepCent
 ./install.sh
-Centromics -h
+centromics -h
 ```
 
 # Workflow
